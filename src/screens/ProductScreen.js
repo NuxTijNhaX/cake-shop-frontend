@@ -36,13 +36,12 @@ const ProductScreen = {
                 <div class="col-2">
                     <h1>${product.name}</h1>
                     <h4>${formatCurrency(product.price)}</h4>
-                    <select>
-                        <option selected hidden disabled>Chọn size</option>
-                        <option>Nhỏ</option>
+                    <select disabled>
+                        <option selected>Nhỏ</option>
                         <option>Vừa</option>
                         <option>Lớn</option>
                     </select>
-                    <input type="number" value="1" min="1">
+                    <input type="number" value="1" min="1" disabled>
                     <a class="btn" id="add-cart-button">Thêm vào giỏ hàng</a>
                     <h3>Thông tin chi tiết <i class="fa fa-indent"></i></h3>
                     <br>

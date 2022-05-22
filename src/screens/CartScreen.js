@@ -4,10 +4,10 @@ import { getCartItems, setCartItems } from "../localStorage.js";
 
 const addToCart = (item, forceUpdate = false) => {
     let cartItems = getCartItems();
-    const existItem = cartItems.find(pro => pro.id === item.id);
+    const existItem = cartItems.find(pro => pro.id == item.id);
     if(existItem) {
         if(forceUpdate) {
-            cartItems = cartItems.map(x => x.id === existItem.id ? item : x);
+            cartItems = cartItems.map(x => x.id == existItem.id ? item : x);
         }
     }
     else {
@@ -75,13 +75,12 @@ const CartScreen = {
                             </td>
                             <td>
                                 <select>
-                                    <option selected hidden disabled>Chọn size</option>
-                                    <option value="nhỏ">Nhỏ</option>
+                                    <option selected value="nhỏ">Nhỏ</option>
                                     <option value="vừa">Vừa</option>
                                     <option value="lớn">Lớn</option>
                                 </select>
                             </td>
-                            <td><input class="quantity-selecter" id="${item.id}" type="number" value="${item.quantity}" min="1"></td>
+                            <td><input class="quantity-selecter" id="${item.id}" type="number" value=${item.quantity} min="1"></td>
                             <td>${formatCurrency(item.price * item.quantity)}</td>                
                         </tr>
                     `).join("")}
@@ -100,7 +99,7 @@ const CartScreen = {
                     </tr>
                     <tr>
                         <td>Thành tiền</td>
-                        <td id="to-pay" value=0>920.000 VND</td>
+                        <td id="to-pay"></td>
                     </tr>
                 </table>
             </div>
@@ -115,8 +114,14 @@ const CartScreen = {
         const quantitySelecter = document.getElementsByClassName("quantity-selecter");
         Array.from(quantitySelecter).forEach(qty => {
             qty.addEventListener('change', (e) => {
-                const item = getCartItems().find(x => x.id === qty.id);
-                addToCart({...item, quantity: Number(e.target.value)}, true)
+                
+                qty.setAttribute('value', Number(qty.value));
+
+                setCartItems(getCartItems().map(item => item.id == qty.id ? 
+                    { ...item, quantity: Number(qty.value)} : 
+                    item));
+                
+                reRender(CartScreen);
             })
         });
 
@@ -133,6 +138,8 @@ const CartScreen = {
         const payment = parseFloat(total.textContent.replaceAll('.','').replace('₫', '')) - 
             parseFloat(discount.textContent.replaceAll('.','').replace('₫', ''));
         toPay.textContent = formatCurrency(payment > 0 ? payment : 0);
+
+        document.location.hash = "/cart";
     }
 }
 
