@@ -45,9 +45,9 @@ export const getNewReleaseProduct = async () => {
     }
 }
 
-export const getProducts = async (page = 1) => {
+export const getProducts = async (search = "", category = "", orderBy = "", page = 1) => {
     try {
-        const response = await fetch(`${endpoint}/Product?page=${page}`);
+        const response = await fetch(`${endpoint}/Product?search=${search}&category=${category}&orderBy=${orderBy}&page=${page}`);
 
         if(!response || !response.ok) {
             throw new Error(response.title);

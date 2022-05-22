@@ -7,27 +7,36 @@ import { parseRequestUrl } from "./utils.js";
 import AllProductScreen from "./screens/AllProductsScreen.js";
 import CartScreen from "./screens/CartScreen.js";
 import CategoryScreen from "./screens/CategoryScreen.js";
+import SearchingScreen from "./screens/SearchingScreen.js";
+import LoginScreen from "./screens/LoginScreen.js";
+import RegisterScreen from "./screens/RegisterScreen.js";
+import ProfileScreen from "./screens/ProfileScreen.js";
 
 const routes = {
     '/': HomeScreen,
     '/product/:id': ProductScreen,
-    '/products': AllProductScreen,
-    '/products/:id': AllProductScreen,
-    '/category/:name': CategoryScreen,
+    '/products/:id/:verb': AllProductScreen,
+    '/searching/:id/:verb/:sub': SearchingScreen,
+    '/category/:id': CategoryScreen,
     '/cart': CartScreen,
     '/cart/:id': CartScreen,
+    '/login': LoginScreen,
+    '/register': RegisterScreen,
+    
 }
 
 const router = async () => {
     const request = parseRequestUrl();
     const parseUrl = (request.resource ? `/${request.resource}` : '/') +
         (request.id ? '/:id' : '') + 
-        (request.verb ? `/${request.verb}` : '');
+        (request.verb ? `/:verb` : '') + 
+        (request.sub ? `/:sub` : '');
 
     const screen = routes[parseUrl] ? routes[parseUrl] : Error404Screen;
 
     const header = document.getElementById("header-container");
     header.innerHTML = await Header.render();
+    await Header.after_render();
 
     const main = document.getElementById("main-container");
     main.innerHTML = await screen.render();

@@ -55,7 +55,7 @@ const ProductScreen = {
         <div class="small-container">
             <div class="row row-2">
                 <h2>Mẫu bánh liên quan</h2>
-                <a href="/#/products">Xem thêm</a>
+                <a href="/#/products/1/default">Xem thêm</a>
             </div>
         </div>
 

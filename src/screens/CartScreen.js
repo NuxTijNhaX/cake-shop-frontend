@@ -56,7 +56,9 @@ const CartScreen = {
                     <th>Tổng cộng</th>
                 </tr>
                     ${cartItems.length === 0 ? 
-                        `<div><strong>Giỏ hàng trống!!!</strong></div></br>` :
+                        `<div><strong>Giỏ hàng trống!!!</strong></div>
+                        <a href="/#/products/1/default" class="btn">Mua Ngay</a>
+                        </br>` :
                         cartItems.map(item => `
                         <tr>
                             <td>

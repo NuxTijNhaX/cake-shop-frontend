@@ -12,7 +12,7 @@ const HomeScreen = {
                 <h1>Chào mừng đến với<br>Tiệm bánh 101!</h1>
                 <p>Chúng tôi mang đến những chiếc bánh kem ngon nhất với giá tốt nhất<br>Hãy đặt hàng ngay hôm
                     nay...</p>
-                <a href="/#/products/1" class="btn">Khám phá ngay &#8594;</a>
+                <a href="/#/products/1/default" class="btn">Khám phá ngay &#8594;</a>
             </div>
             <div class="col-2">
                 <img src="images/banner.png">

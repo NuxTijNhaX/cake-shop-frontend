@@ -1,25 +1,17 @@
 import ProductCard from "../components/ProductCard.js";
-import Pagination from "../components/Pagination.js";
 import { getProducts } from "../api.js";
 import { parseRequestUrl } from "../utils.js";
 
-const AllProductScreen = {
+const SearchingScreen = {
     render: async () => {
         const request = parseRequestUrl();
-        let products = null;
-
-        if(request.verb == "default") {
-            products = await getProducts("", "", "", request.id);
-        } 
-        else {
-            products = await getProducts("", "", request.verb, request.id);
-        }
+        const products = await getProducts(request.id, "", request.sub, request.verb);
 
         return `
             <div class="small-container">
 
             <div class="row row-2">
-                <h2>Tất cả bánh</h2>
+                <h2>Kết quả tìm kiếm cho "${request.id.replaceAll('%20', ' ')}"</h2>
                 <select id="order-by">
                     <option selected value="default">Mặc định</option>
                     <option value="price_asc">Theo giá tăng</option>
@@ -37,7 +29,7 @@ const AllProductScreen = {
 
             <div class="page-btn">
                 <span>&#8592;</span>
-                ${Pagination.render(window.location.hash, products[0].totalPage)}
+                ${products.length > 0 ? Pagination.render(window.location.hash, products[0].totalPage) : ''}
                 <span>&#8594;</span>
             </div>
         </div>
@@ -57,10 +49,23 @@ const AllProductScreen = {
 
         const orderBy = document.getElementById("order-by");
         orderBy.addEventListener('change', () => {
-            window.location.hash = '/' + [request.resource, request.id, orderBy.value].join('/');
+            window.location.hash = '/' + [request.resource, request.id, request.verb, orderBy.value].join('/');
         });
-        orderBy.value = request.verb;
+        orderBy.value = request.sub;
+    }
+};
+
+const Pagination = {
+    render: (href, range) => {
+        let script = "";
+        let hrefArr = href.split("/");
+        for (let index = 1; index <= range; index++) {
+            let link = [hrefArr[0], hrefArr[1], hrefArr[2], index, hrefArr[4]].join("/");
+            script += `<a class="pagination" href="/${link}" value=${index}><span>${index}</span></a>`;
+        }
+
+        return script;
     }
 }
 
-export default AllProductScreen;
+export default SearchingScreen;

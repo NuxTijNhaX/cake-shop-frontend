@@ -6,6 +6,7 @@ export const parseRequestUrl = () => {
       resource: request[1],
       id: request[2],
       verb: request[3],
+      sub: request[4],
     };
 };
 
