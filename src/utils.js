@@ -1,3 +1,4 @@
+import { getCartItems } from "./localStorage.js";
 
 export const parseRequestUrl = () => {
     const url = document.location.hash.toLowerCase();
@@ -20,3 +21,12 @@ export const reRender = async(component) => {
   document.getElementById("main-container").innerHTML = await component.render();
   await component.after_render();
 }
+
+export const redirectUser = () => {
+  console.log(getCartItems().length);
+  if (getCartItems().length !== 0) {
+    document.location.hash = '/shipping';
+  } else {
+    document.location.hash = '/';
+  }
+};

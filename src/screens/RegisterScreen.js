@@ -40,7 +40,7 @@ const RegisterScreen = {
         `;
     },
     after_render: () => {
-
+        
     }
 }
 

@@ -1,6 +1,8 @@
+import { getUserInfo } from "../localStorage.js";
 
 const Header = {
     render: () => {
+        const { name } = getUserInfo();
         return `
             <div class="navbar">
                 <div class="logo">
@@ -14,7 +16,7 @@ const Header = {
                     <ul id="MenuItems">
                         <li><a href="/#/">Trang chủ</a></li>
                         <li><a href="/#/products/1/default">Sản phẩm</a></li>
-                        <li><a href="/#/login">Đăng nhập</a></li>
+                        <li>${name ? `<a href="/#/profile">Xin chào, </br>${name}</a></li>` : `<a href="/#/login">Đăng nhập</a></li>`}
                     </ul>
                 </nav>
                 <img id="search-toggle" src="images/search.png" class="search-icon">

@@ -59,3 +59,39 @@ export const getProducts = async (search = "", category = "", orderBy = "", page
         return { error: error.message };
     }
 }
+
+export const signin = async ({ phone, password }) => {
+    try {
+        const response = await fetch(`${endpoint}/User?phone=${phone}&password=${password}`);
+
+        return await response.json();
+    } 
+    catch (err) {
+        console.log(err);
+        return { error: err.message };
+    }
+};
+  
+  export const register = async ({ name, email, password }) => {
+    try {
+      const response = await axios({
+        url: `${apiUrl}/api/users/register`,
+        method: 'POST',
+        header: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          name,
+          email,
+          password,
+        },
+      });
+      if (response.statusText !== 'OK') {
+        throw new Error(response.data.message);
+      }
+      return response.data;
+    } catch (err) {
+      console.log(err);
+      return { error: err.response.data.message || err.message };
+    }
+};
