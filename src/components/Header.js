@@ -8,10 +8,11 @@ const Header = {
                 <div class="logo">
                     <a href="/#/"><img src="images/logo.png" width="225px"></a>
                 </div>
-                <div id="search-bar" style="background: white;">
-                    <input id="search-string" type="search" class="search-data" placeholder="Tìm sản phẩm mong muốn..." style="color: black;" required>
-                    <button id="search-btn" class="fa fa-search"></button>
-                </div>
+                
+                <form id="search-bar" style="background: white;">
+                    <input id="search-string" type="search" class="search-data" placeholder="Tìm sản phẩm mong muốn..." style="color: black;">
+                    <button id="search-btn" type="submit" class="fa fa-search"></button>
+                </form>
                 <nav>
                     <ul id="MenuItems">
                         <li><a href="/#/">Trang chủ</a></li>

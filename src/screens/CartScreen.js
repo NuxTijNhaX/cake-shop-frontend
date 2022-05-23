@@ -107,7 +107,7 @@ const CartScreen = {
             </div>
 
             <div class="pay-btn">
-                <a href="" class="btn">Thanh toán</a>
+                <a href="/#/shipping" class="btn">Thanh toán</a>
             </div>
         </div>
         `
