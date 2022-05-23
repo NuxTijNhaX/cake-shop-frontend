@@ -1,6 +1,6 @@
 import { getCartItems, getShipping, getPayment, cleanCart } from '../localStorage.js';
 import CheckoutSteps from '../components/CheckoutSteps.js';
-import { showLoading, hideLoading, showMessage } from '../utils.js';
+import { showLoading, hideLoading, showMessage, formatCurrency } from '../utils.js';
 import { createOrder } from '../api.js';
 
 const convertCartToOrder = () => {
@@ -9,31 +9,30 @@ const convertCartToOrder = () => {
     document.location.hash = '/cart';
   }
   const shipping = getShipping();
-  if (!shipping.address) {
+  if (!shipping.soNha) {
     document.location.hash = '/shipping';
   }
   const payment = getPayment();
   if (!payment.paymentMethod) {
     document.location.hash = '/payment';
   }
-  const itemsPrice = orderItems.reduce((a, c) => a + c.price * c.qty, 0);
-  const shippingPrice = itemsPrice > 100 ? 0 : 10;
-  const taxPrice = Math.round(0.15 * itemsPrice * 100) / 100;
-  const totalPrice = itemsPrice + shippingPrice + taxPrice;
+
+
+  const itemsPrice = orderItems.reduce((a, c) => a + c.price * c.quantity, 0);
+  const totalPrice = itemsPrice;
+
   return {
     orderItems,
     shipping,
     payment,
     itemsPrice,
-    shippingPrice,
-    taxPrice,
     totalPrice,
   };
 };
+
 const PlaceOrderScreen = {
   after_render: async () => {
-    document
-      .getElementById('placeorder-button')
+    document.getElementById('placeorder-button')
       .addEventListener('click', async () => {
         const order = convertCartToOrder();
         showLoading();
@@ -46,6 +45,13 @@ const PlaceOrderScreen = {
           document.location.hash = `/order/${data.order._id}`;
         }
       });
+
+      const total = document.getElementById("total");
+      const discount = document.getElementById("discount");
+      const toPay = document.getElementById("to-pay");
+      const payment = parseFloat(total.textContent.replaceAll('.','').replace('₫', '')) - 
+          parseFloat(discount.textContent.replaceAll('.','').replace('₫', ''));
+      toPay.textContent = formatCurrency(payment > 0 ? payment : 0);
   },
   render: () => {
     const {
@@ -53,77 +59,91 @@ const PlaceOrderScreen = {
       shipping,
       payment,
       itemsPrice,
-      shippingPrice,
-      taxPrice,
       totalPrice,
     } = convertCartToOrder();
     return `
-    <div>
-      ${CheckoutSteps.render({
-        step1: true,
-        step2: true,
-        step3: true,
-        step4: true,
-      })}
+    <div class="small-container cart-page">
+      ${CheckoutSteps.render({step1: true,step2: true,step3: true,step4: true})}
       <div class="order">
         <div class="order-info">
-          <div>
-            <h2>Shipping</h2>
-            <div>
-            ${shipping.address}, ${shipping.city}, ${shipping.postalCode}, 
-            ${shipping.country}
+
+          <div class="center border-card">
+            <h2>Vận chuyển</h2>
+            <div> Địa chỉ: ${shipping.soNha}, ${shipping.xa}, ${shipping.huyen}, ${shipping.tinh}
             </div>
           </div>
-          <div>
-            <h2>Payment</h2>
+
+          <div class="center border-card">
+            <h2>Thanh toán</h2>
             <div>
-              Payment Method : ${payment.paymentMethod}
+              Phương thức thanh toán: ${payment.paymentMethod}
             </div>
           </div>
-          <div>
-            <ul class="cart-list-container">
-              <li>
-                <h2>Shopping Cart</h2>
-                <div>Price</div>
-              </li>
-              ${orderItems
-                .map(
-                  (item) => `
-                <li>
-                  <div class="cart-image">
-                    <img src="${item.image}" alt="${item.name}" />
-                  </div>
-                  <div class="cart-name">
-                    <div>
-                      <a href="/#/product/${item.product}">${item.name} </a>
-                    </div>
-                    <div> Qty: ${item.qty} </div>
-                  </div>
-                  <div class="cart-price"> $${item.price}</div>
-                </li>
-                `
-                )
-                .join('\n')}
-            </ul>
+
+          <div >
+            <table>
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Kích cỡ</th>
+                    <th>Số lượng</th>
+                    <th>Tổng cộng</th>
+                </tr>
+                    ${orderItems.map(item => `
+                        <tr>
+                            <td>
+                            <div class="cart-info">
+                                <a href="/#/product/${item.id}">
+                                    <img src="${item.img}">
+                                </a>
+                                    <div>
+                                    <a href="/#/product/${item.id}">
+                                        <p>${item.name}</p>
+                                        <small>Giá: ${formatCurrency(item.price)}</small>
+                                    </a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <select disabled >
+                                    <option value="small">Nhỏ</option>
+                                    <option value="medium">Vừa</option>
+                                    <option value="large">Lớn</option>
+                                </select>
+                            </td>
+                            <td><input class="quantity-selecter" id="${item.id}" type="number" value=${item.quantity} min="1" disabled></td>
+                            <td>${formatCurrency(item.price * item.quantity)}</td>                
+                        </tr>
+                    `).join("")}
+
+            </table>
+
+            <div class="total-price">
+                <table>
+                    <tr>
+                        <td>Tổng cộng (${orderItems.reduce((a, c) => a + c.quantity, 0)} món)</td>
+                        <td id="total">${formatCurrency(orderItems.reduce((a, c) => a + c.price * c.quantity, 0))}</td>
+                    </tr>
+                    <tr>
+                        <td>Giảm giá</td>
+                        <td id="discount">${formatCurrency(0)}</td>
+                    </tr>
+                    <tr>
+                        <td>Thành tiền</td>
+                        <td id="to-pay"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="placeorder-button" class="center">
+                <a style="cursor: pointer" class="btn">Đặt Hàng</a>
+            </div>
           </div>
-        </div>
-        <div class="order-action">
-           <ul>
-                <li>
-                  <h2>Order Summary</h2>
-                 </li>
-                 <li><div>Items</div><div>$${itemsPrice}</div></li>
-                 <li><div>Shipping</div><div>$${shippingPrice}</div></li>
-                 <li><div>Tax</div><div>$${taxPrice}</div></li>
-                 <li class="total"><div>Order Total</div><div>$${totalPrice}</div></li> 
-                 <li>
-                 <button id="placeorder-button" class="primary fw">
-                 Place Order
-                 </button>
+          
         </div>
       </div>
     </div>
     `;
   },
 };
+
 export default PlaceOrderScreen;

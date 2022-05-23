@@ -3,14 +3,16 @@ import CheckoutSteps from '../components/CheckoutSteps.js';
 
 const PaymentScreen = {
   after_render: () => {
-    document
-      .getElementById('payment-form')
+    document.getElementById('payment-form')
       .addEventListener('submit', async (e) => {
         e.preventDefault();
+
         const paymentMethod = document.querySelector(
           'input[name="payment-method"]:checked'
         ).value;
+
         setPayment({ paymentMethod });
+        
         document.location.hash = '/placeorder';
       });
   },
@@ -32,7 +34,7 @@ const PaymentScreen = {
               <input type="radio"
               name="payment-method"
               id="momo"
-              value="MoMo"
+              value="momo"
               checked />
               <label for="momo" >MoMo</label>
              </div> 
@@ -48,7 +50,7 @@ const PaymentScreen = {
            </div> 
         </li>
           <li>
-            <button type="submit" class="primary">Continue</button>
+            <button type="submit" class="primary">Tiếp tục</button>
           </li>        
         </ul>
       </form>

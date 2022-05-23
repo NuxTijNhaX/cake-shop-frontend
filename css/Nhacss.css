@@ -43,4 +43,21 @@
   .checkout-steps > div.active {
     color: #f08000;
     border-top-color: #f08000;
-  }
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+  
+}
+
+.border-card {
+  border: rgba(16, 16, 16, 0.5) 1px solid;
+  border-radius: 5px;
+  padding: 1em;
+  margin-bottom: 1em;
+  background-color: rgba(244, 228, 220, 0.5);
+}

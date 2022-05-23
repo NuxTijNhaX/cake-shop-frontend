@@ -42,7 +42,7 @@ const CartScreen = {
                 img: product.photos.split(",")[0],
                 price: product.price,
                 quantity: 1,
-                size: 'Nhỏ',
+                size: 'small',
             });
         }
         let cartItems = getCartItems();
@@ -76,10 +76,10 @@ const CartScreen = {
                                 </div>
                             </td>
                             <td>
-                                <select>
-                                    <option selected value="nhỏ">Nhỏ</option>
-                                    <option value="vừa">Vừa</option>
-                                    <option value="lớn">Lớn</option>
+                                <select class="size-selector" id="${item.id}">
+                                    <option selected value="small">Nhỏ</option>
+                                    <option value="medium">Vừa</option>
+                                    <option value="large">Lớn</option>
                                 </select>
                             </td>
                             <td><input class="quantity-selecter" id="${item.id}" type="number" value=${item.quantity} min="1"></td>
@@ -124,6 +124,20 @@ const CartScreen = {
                     item));
                 
                 reRender(CartScreen);
+            })
+        });
+
+        const sizeSelectors = document.getElementsByClassName("size-selector");
+        Array.from(sizeSelectors).forEach(sizeSelector => {
+            sizeSelector.addEventListener('change', (e) => {
+                
+                sizeSelector.setAttribute('value', sizeSelector.value);
+
+                setCartItems(getCartItems().map(item => item.id == sizeSelector.id ? 
+                    { ...item, size: sizeSelector.value} : 
+                    item));
+                
+                // reRender(CartScreen);
             })
         });
 
