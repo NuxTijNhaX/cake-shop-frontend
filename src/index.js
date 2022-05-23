@@ -3,7 +3,7 @@ import Footer from "./components/Footer.js";
 import HomeScreen from "./screens/HomeScreen.js";
 import ProductScreen from "./screens/ProductScreen.js";
 import Error404Screen from "./screens/Error404Screen.js";
-import { parseRequestUrl } from "./utils.js";
+import { hideLoading, parseRequestUrl, showLoading } from "./utils.js";
 import AllProductScreen from "./screens/AllProductsScreen.js";
 import CartScreen from "./screens/CartScreen.js";
 import CategoryScreen from "./screens/CategoryScreen.js";
@@ -22,10 +22,11 @@ const routes = {
     '/cart/:id': CartScreen,
     '/login': LoginScreen,
     '/register': RegisterScreen,
-    
+    '/profile': ProfileScreen,
 }
 
 const router = async () => {
+    showLoading();
     const request = parseRequestUrl();
     const parseUrl = (request.resource ? `/${request.resource}` : '/') +
         (request.id ? '/:id' : '') + 
@@ -44,6 +45,8 @@ const router = async () => {
 
     const footer = document.getElementById("footer-container");
     footer.innerHTML = await Footer.render();
+
+    hideLoading();
 }
 
 window.addEventListener('load', router);

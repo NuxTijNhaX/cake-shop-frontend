@@ -1,6 +1,6 @@
 import { signin } from "../api.js";
 import { getUserInfo, setUserInfo } from "../localStorage.js";
-import { redirectUser } from "../utils.js";
+import { hideLoading, redirectUser, showLoading, showMessage } from "../utils.js";
 
 const LoginScreen = {
     render: () => {
@@ -40,18 +40,17 @@ const LoginScreen = {
         document.getElementById('signin-form')
             .addEventListener('submit', async (e) => {
                 e.preventDefault();
-                // showLoading();
+                showLoading();
                 const data = await signin({
                     phone: document.getElementById('phone').value,
                     password: document.getElementById('password').value,
                 });
-                // hideLoading();
+                hideLoading();
                 if (data.error) {
-                    // showMessage(data.error);
+                    showMessage(data.error);
                 } else {
                     setUserInfo(data);
-                    //redirectUser();
-                    document.location.hash = '/';
+                    redirectUser();
                 }
             });
     }

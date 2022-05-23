@@ -64,6 +64,10 @@ export const signin = async ({ phone, password }) => {
     try {
         const response = await fetch(`${endpoint}/User?phone=${phone}&password=${password}`);
 
+        if(response.status !== 200) {
+            throw new Error("Tài khoản hoặc mật khẩu không đúng");
+        }
+
         return await response.json();
     } 
     catch (err) {
@@ -72,26 +76,16 @@ export const signin = async ({ phone, password }) => {
     }
 };
   
-  export const register = async ({ name, email, password }) => {
+  export const register = async ({ name, phone, password }) => {
     try {
-      const response = await axios({
-        url: `${apiUrl}/api/users/register`,
-        method: 'POST',
-        header: {
-          'Content-Type': 'application/json',
-        },
-        data: {
-          name,
-          email,
-          password,
-        },
-      });
-      if (response.statusText !== 'OK') {
-        throw new Error(response.data.message);
-      }
-      return response.data;
-    } catch (err) {
-      console.log(err);
-      return { error: err.response.data.message || err.message };
+        const response = await fetch(`${endpoint}/User/register?name=${name}&phone=${phone}&password=${password}`);
+        
+        if (response.status !== 200) {
+          throw new Error("Looix");
+        }
+        return await response.json();
+      } catch (err) {
+        console.log(err);
+        return { error: err.message };
     }
 };

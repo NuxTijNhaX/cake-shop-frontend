@@ -41,5 +41,5 @@ export const clearUser = () => {
 export const getUserInfo = () => {
     return localStorage.getItem('userInfo')
         ? JSON.parse(localStorage.getItem('userInfo'))
-        : { name: '', email: '', password: '' };
+        : { name: '', phoneNumber: '', email: '', password: '' };
 };
