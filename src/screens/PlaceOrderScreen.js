@@ -1,4 +1,4 @@
-import { getCartItems, getShipping, getPayment, cleanCart } from '../localStorage.js';
+import { getCartItems, getShipping, getPayment, cleanCart, getUserInfo } from '../localStorage.js';
 import CheckoutSteps from '../components/CheckoutSteps.js';
 import { showLoading, hideLoading, showMessage, formatCurrency } from '../utils.js';
 import { createOrder } from '../api.js';
@@ -17,7 +17,6 @@ const convertCartToOrder = () => {
     document.location.hash = '/payment';
   }
 
-
   const itemsPrice = orderItems.reduce((a, c) => a + c.price * c.quantity, 0);
   const totalPrice = itemsPrice;
 
@@ -30,11 +29,36 @@ const convertCartToOrder = () => {
   };
 };
 
+const convertCartToPlaceOrderData = (payment) => {
+  const userId = getUserInfo().id;
+  const orderLines = getCartItems().map(item => {
+    return {
+      productId: item.id,
+      quantity: item.quantity,
+      size: item.size
+    }
+  });
+
+  return {
+    userId: userId,
+    orderLines: orderLines,
+    paymentMethod: getPayment().paymentMethod,
+    totalCost: payment,
+  };
+};
+
 const PlaceOrderScreen = {
   after_render: async () => {
+    const total = document.getElementById("total");
+    const discount = document.getElementById("discount");
+    const toPay = document.getElementById("to-pay");
+    const payment = parseFloat(total.textContent.replaceAll('.','').replace('₫', '')) - 
+        parseFloat(discount.textContent.replaceAll('.','').replace('₫', ''));
+    toPay.textContent = formatCurrency(payment > 0 ? payment : 0);
+
     document.getElementById('placeorder-button')
       .addEventListener('click', async () => {
-        const order = convertCartToOrder();
+        const order = convertCartToPlaceOrderData(payment);
         showLoading();
         const data = await createOrder(order);
         hideLoading();
@@ -46,12 +70,7 @@ const PlaceOrderScreen = {
         }
       });
 
-      const total = document.getElementById("total");
-      const discount = document.getElementById("discount");
-      const toPay = document.getElementById("to-pay");
-      const payment = parseFloat(total.textContent.replaceAll('.','').replace('₫', '')) - 
-          parseFloat(discount.textContent.replaceAll('.','').replace('₫', ''));
-      toPay.textContent = formatCurrency(payment > 0 ? payment : 0);
+    console.log(JSON.stringify(convertCartToPlaceOrderData(payment)));
   },
   render: () => {
     const {
@@ -76,7 +95,7 @@ const PlaceOrderScreen = {
           <div class="center border-card">
             <h2>Thanh toán</h2>
             <div>
-              Phương thức thanh toán: ${payment.paymentMethod}
+              Phương thức thanh toán: ${payment.paymentMethod.toUpperCase()}
             </div>
           </div>
 

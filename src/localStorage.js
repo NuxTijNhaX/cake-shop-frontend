@@ -12,7 +12,7 @@ export const setCartItems = (cartItems) => {
 };
 
 export const setUserInfo = ({
-    _id = '',
+    id = '',
     name = '',
     address = '',
     email = '',
@@ -23,7 +23,7 @@ export const setUserInfo = ({
     localStorage.setItem(
         'userInfo',
         JSON.stringify({
-        _id,
+        id,
         name,
         address,
         email,

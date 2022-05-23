@@ -78,7 +78,13 @@ export const signin = async ({ phone, password }) => {
   
   export const register = async ({ name, phone, password }) => {
     try {
-        const response = await fetch(`${endpoint}/User/register?name=${name}&phone=${phone}&password=${password}`);
+        const response = await fetch(`${endpoint}/User/register?name=${name}&phone=${phone}&password=${password}`, {
+            method: "POST",
+            body: JSON.stringify({
+                title: "Title of post",
+                body: "Post Body"
+            })
+        });
         
         if (response.status !== 200) {
           throw new Error("Looix");
@@ -91,22 +97,14 @@ export const signin = async ({ phone, password }) => {
 };
 
 export const createOrder = async (order) => {
-    try {
-      const { token } = getUserInfo();
-      const response = await axios({
-        url: `${apiUrl}/api/orders`,
+      fetch(`${apiUrl}/api/Order`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        data: order,
-      });
-      if (response.statusText !== 'Created') {
-        throw new Error(response.data.message);
-      }
-      return response.data;
-    } catch (err) {
-      return { error: err.response ? err.response.data.message : err.message };
-    }
+        body: JSON.stringify(order)
+      })
+      .then(res => {
+        if (!response.ok) throw Error(response.statusText);
+        return response.json();
+      })
+      .then(data => console.log(data))
+      .catch(error => console.log(error));
 };
