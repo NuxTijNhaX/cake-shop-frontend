@@ -43,7 +43,7 @@ export const showMessage = (message, callback) => {
   document.getElementById('message-overlay').innerHTML = `
   <div>
     <div id="message-overlay-content">${message}</div>
-    <button id="message-overlay-close-button">OK</button>
+    <button id="message-overlay-close-button" class="ok-btn">OK</button>
   </div>
   `;
   document.getElementById('message-overlay').classList.add('active');
@@ -56,3 +56,7 @@ export const showMessage = (message, callback) => {
       }
     });
 };
+
+export const capitalize = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}

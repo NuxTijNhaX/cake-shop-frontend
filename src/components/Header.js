@@ -1,29 +1,37 @@
-import { clearUser, getUserInfo } from "../localStorage.js";
+import { getCategory } from "../api.js";
+import { getUserInfo } from "../localStorage.js";
 
 const Header = {
-    render: () => {
+    render: async () => {
         const { name } = getUserInfo();
+        const catetory = await getCategory();
+
         return `
-            <div class="navbar">
-                <div class="logo">
-                    <a href="/#/"><img src="images/logo.png" width="225px"></a>
-                </div>
-                
-                <form id="search-bar" style="background: white;">
-                    <input id="search-string" type="search" class="search-data" placeholder="Tìm sản phẩm mong muốn..." style="color: black;">
-                    <button id="search-btn" type="submit" class="fa fa-search"></button>
-                </form>
-                <nav>
-                    <ul id="MenuItems">
-                        <li><a href="/#/">Trang chủ</a></li>
-                        <li><a href="/#/products/1/default">Sản phẩm</a></li>
-                        <li>${name ? `<a href="/#/profile">Xin chào, </br>${name}</a>` : `<a href="/#/login">Đăng nhập</a></li>`}
-                    </ul>
-                </nav>
-                <img id="search-toggle" src="images/search.png" class="search-icon">
-                <a href="/#/cart"><img src="images/cart.png" width="30px" height="30px"></a>
-                <img id="menu-toggle" src="images/menu.png" class="menu-icon">
-            </div>
+        <div class="navbar">
+            <div class="logo">
+                <a href="/#/"><img src="images/logo.png" width="250px"></a>
+            </div>  
+            <form id="search-bar" style="background: white;">
+                <input id="search-string" type="search" class="search-data" placeholder="Tìm sản phẩm mong muốn..." style="color: black;">
+                <button id="search-btn" type="submit" class="fa fa-search"></button>
+            </form>
+            <nav>
+                <ul class="menu" id="MenuItems">
+                    <li><a href="/#/">Trang chủ</a></li>
+                    <li class="dropdown">
+                        <a class="dropbtn" href="/#/products/1/default">Sản phẩm</a>
+                        <div class="dropdown-content">
+                            ${catetory ? 
+                                catetory.map(cate => (`<a href="/#/category/${cate.name.split(' ')[0].toLowerCase()}/1/default">${cate.name}</a>`)).join('') : ``}
+                        </div>  
+                    </li>
+                    <li>${name ? `<a href="/#/profile">Xin chào, </br>${name}</a>` : `<a href="/#/login">Đăng nhập</a></li>`}
+                </ul>
+            </nav>
+            <img id="search-toggle" src="images/search.png" class="search-icon">
+            <a class="cart-btn" href="/#/cart"><img src="images/cart.png" width="30px" height="30px"></a>
+            <img id="menu-toggle" src="images/menu.png" class="menu-icon">
+        </div>
         `;
     },
     after_render: () => {

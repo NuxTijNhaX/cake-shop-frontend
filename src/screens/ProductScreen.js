@@ -20,16 +20,16 @@ const ProductScreen = {
 
                     <div class="small-img-row">
                         <div class="small-img-col">
-                            <img src="${product.photos.split(',')[0]}" width="100%" class="small-img">
+                            <img src="${product.photos.split(',')[0]}" class="small-img">
                         </div>
                         <div class="small-img-col">
-                            <img src="${product.photos.split(',')[1] ? product.photos.split(',')[1] : `images/no-image.png`}" width="100%" class="small-img">
+                            <img src="${product.photos.split(',')[1] ? product.photos.split(',')[1] : `images/no-image.png`}" class="small-img">
                         </div>
                         <div class="small-img-col">
-                            <img src="${product.photos.split(',')[2] ? product.photos.split(',')[1] : `images/no-image.png`}" width="100%" class="small-img">
+                            <img src="${product.photos.split(',')[2] ? product.photos.split(',')[1] : `images/no-image.png`}" class="small-img">
                         </div>
                         <div class="small-img-col">
-                            <img src="${product.photos.split(',')[3] ? product.photos.split(',')[1] : `images/no-image.png`}" width="100%" class="small-img">
+                            <img src="${product.photos.split(',')[3] ? product.photos.split(',')[1] : `images/no-image.png`}" class="small-img">
                         </div>
                     </div>
                 </div>

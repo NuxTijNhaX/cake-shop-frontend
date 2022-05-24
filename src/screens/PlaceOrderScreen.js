@@ -60,17 +60,22 @@ const PlaceOrderScreen = {
       .addEventListener('click', async () => {
         const order = convertCartToPlaceOrderData(payment);
         showLoading();
-        const data = await createOrder(order);
+        const paymentUrl = await createOrder(order);
         hideLoading();
-        if (data.error) {
-          showMessage(data.error);
-        } else {
+        console.log(paymentUrl.paymentLink);
+        if (paymentUrl) {
+          if(paymentUrl.paymentLink) {
+            window.open(paymentUrl.paymentLink, "_blank");
+          }
+          showMessage("Đặt hàng thành công!");
           cleanCart();
-          document.location.hash = `/order/${data.order._id}`;
+          document.location.hash = `/cart`;
+        } else {
+          showMessage("Đặt hàng không thành công!");
         }
       });
 
-    console.log(JSON.stringify(convertCartToPlaceOrderData(payment)));
+    // console.log(JSON.stringify(convertCartToPlaceOrderData(payment)));
   },
   render: () => {
     const {
@@ -153,8 +158,8 @@ const PlaceOrderScreen = {
                 </table>
             </div>
 
-            <div id="placeorder-button" class="center">
-                <a style="cursor: pointer" class="btn">Đặt Hàng</a>
+            <div class="center">
+                <a id="placeorder-button" style="cursor: pointer" class="btn">Đặt Hàng</a>
             </div>
           </div>
           

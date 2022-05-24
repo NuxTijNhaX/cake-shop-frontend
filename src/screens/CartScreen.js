@@ -1,6 +1,6 @@
 import { getProduct } from "../api.js";
-import { parseRequestUrl, formatCurrency, reRender } from "../utils.js";
-import { getCartItems, setCartItems } from "../localStorage.js";
+import { parseRequestUrl, formatCurrency, reRender, showMessage } from "../utils.js";
+import { getCartItems, setCartItems, getUserInfo } from "../localStorage.js";
 
 const addToCart = (item, forceUpdate = false) => {
     let cartItems = getCartItems();
@@ -56,8 +56,8 @@ const CartScreen = {
                     <th>Tổng cộng</th>
                 </tr>
                     ${cartItems.length === 0 ? 
-                        `<div><strong>Giỏ hàng trống!!!</strong></div>
-                        <a href="/#/products/1/default" class="btn">Mua Ngay</a>
+                        `<div class="center"><strong>Giỏ hàng trống!!!</strong>
+                        <a href="/#/products/1/default" class="btn">Mua Ngay</a></div>
                         </br>` :
                         cartItems.map(item => `
                         <tr>
@@ -106,13 +106,27 @@ const CartScreen = {
                 </table>
             </div>
 
-            <div class="pay-btn">
-                <a href="/#/shipping" class="btn">Thanh toán</a>
+            <div class="pay-btn" >
+                <a id="btn-pay" class="btn">Thanh toán</a>
             </div>
         </div>
         `
     },
     after_render: () => {
+        const payBtn = document.getElementById("btn-pay");
+        payBtn.addEventListener('click', () => {
+            let cartItems = getCartItems();
+            if(cartItems.length === 0) {
+                showMessage("Không có gì để thanh toán.\nMua sắm ngay!!!");
+            } else {
+                if(getUserInfo().name) {
+                    document.location.hash = "/shipping";
+                } else {
+                    document.location.hash = "/login"
+                }
+            }
+        });
+
         const quantitySelecter = document.getElementsByClassName("quantity-selecter");
         Array.from(quantitySelecter).forEach(qty => {
             qty.addEventListener('change', (e) => {

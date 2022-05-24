@@ -10,7 +10,7 @@ const ProductCard = {
             <a href="/#/product/${product.id}">
                 <div class="col-4">
                     <img src="${product.photos}" alt=${(product.name).replace(' ', '-').toLowerCase().trim()}>
-                    <h4>${product.name}</h4>
+                    <h4>${product.name.length>25?product.name.slice(0,20)+"...":product.name}</h4>
                     <div class="rating">
                         ${generateRatingStar(product.avgRating)}
                     </div>

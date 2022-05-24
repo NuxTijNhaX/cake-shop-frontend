@@ -8,40 +8,26 @@ const ProfileScreen = {
         }
         // const orders = await getMyOrders();
         return `
-        <div class="content profile">
-        <div class="profile-info">
-        <div class="form-container">
-        <form id="profile-form">
-          <ul class="form-items">
-            <li>
-              <h1>User Profile</h1>
-            </li>
-            <li>
-              <label for="name">Tên</label>
-              <input type="name" name="name" id="name" value="${name}" />
-            </li>
-            <li>
-              <label for="email">Số điện thoại</label>
-              <input type="number" name="phone" id="phoneNumber" value="${phoneNumber}" />
-            </li>
-            <li>
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" value="${email}" />
-            </li>
-            <li>
-              <label for="password">Password</label>
-              <input type="password" name="password" id="password" />
-            </li>
-            <li>
-              <button type="submit" class="primary">Update</button>
-            </li>
-            <li>
-            <button type="button" id="signout-button" >Sign Out</button>
-          </li>        
-          </ul>
-        </form>
-      </div>
-        </div>
+        <div class="login-container">
+                <h1 class="label-login">Thông tin cá nhân</h1>
+                <form id="profile-form">
+                    <div class="form-container">
+                        <label for="name">Tên người dùng</label>
+                        <input type="name" name="name" id="name" value="${name}" />
+                        <label for="email">Số điện thoại</label>
+                        <input type="number" name="phone" id="phone" value="${phoneNumber}" />
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" value="${email}" />
+                        <label for="password">Mật khẩu</label>
+                        <input type="password" name="password" id="password" placeholder="Nhập mật khẩu . . . . . " />
+                        <button type="submit" class="primary">Cập nhập</button>
+                    </div>
+                    <div class="form-container" style="background-color:#f1f1f1">
+                        <a href="/#/"><button type="button" class="cancelbtn">Thoát</button></a>
+                        <a href="/#/" style="float:right"><button class="logoutbtn" type="button" id="signout-button" >Đăng xuất</button></a>
+                    </div>
+                </form>
+            </div>
         `;
     },
     after_render: () => {

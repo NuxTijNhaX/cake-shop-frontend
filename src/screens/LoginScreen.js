@@ -8,32 +8,28 @@ const LoginScreen = {
             redirectUser();
         }
         return `
-            <div class="form-container">
-                <form id="signin-form">
-                    <ul class="form-items">
-                    <li>
-                        <h1>Sign-In</h1>
-                    </li>
-                    <li>
-                        <label for="phone">Số Điện Thoại</label>
-                        <input type="number" name="phone" id="phone" />
-                    </li>
-                    <li>
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password" />
-                    </li>
-                    <li>
-                        <button type="submit" class="primary">Signin</button>
-                    </li>
-                    <li>
-                        <div>
-                        New User?
-                        <a href="/#/register">Create your account </a>
+        <div class="login-container">
+            <h1 class="label-login">Đăng nhập</h1>
+            <form id="signin-form">
+                <div class="form-container">
+                    <label for="phone">Số điện thoại</label>
+                    <input type="number" name="phone" id="phone" placeholder="Nhập Số điện thoại . . . . . " required/>
+                    <label for="password">Mật khẩu</label>
+                    <input type="password" name="password" id="password" placeholder="Nhập mật khẩu . . . . . " required/>            
+                    <button type="submit" class="primary">Đăng nhập</button>
+                    <label>
+                        <div style="font-size:14px">
+                            Chưa có tài khoản? &nbsp;
+                            <a href="/#/register">Đăng ký</a>
                         </div>
-                    </li>
-                    </ul>
-                </form>
-            </div>
+                    </label>
+                </div>
+                <div class="form-container" style="background-color:#f1f1f1">
+                    <a href="/#/"><button type="button" class="cancelbtn">Thoát</button></a>
+                    <span class="psw"><a href="/#/register">Quên mật khẩu?</a></span>
+                </div>
+            </form>
+        </div>
         `;
     },
     after_render: async () => {

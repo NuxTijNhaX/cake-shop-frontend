@@ -61,3 +61,15 @@
   margin-bottom: 1em;
   background-color: rgba(244, 228, 220, 0.5);
 }
+
+.ok-btn {
+  background-color: #FF523B;
+  padding: 1em;
+  color: white;
+  font-weight: bold;
+  border-radius: 7px;
+}
+
+.ok-btn:hover {
+  background-color: #563434;
+}

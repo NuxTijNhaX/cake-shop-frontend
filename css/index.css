@@ -63,10 +63,9 @@ p {
 
 .header {
     background: radial-gradient(#F4E4DC, #F4E4DC);
-    margin-bottom: 40px;
 }
 
 .header .row {
-    margin-top: 40px;
+    margin-bottom: 40px;
 }
 

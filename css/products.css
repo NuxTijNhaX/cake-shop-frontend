@@ -77,6 +77,8 @@ select:focus {
 
 .page-btn {
     margin: 0 auto 80px;
+    display: flex;
+    justify-content: center;
 }
 
 .page-btn span {
@@ -153,4 +155,9 @@ input:focus {
 .small-img-col {
     flex-basis: 24%;
     cursor: pointer;
+}
+
+.active-pagination > span {
+    background-color: #693a1f;
+    color: white;
 }

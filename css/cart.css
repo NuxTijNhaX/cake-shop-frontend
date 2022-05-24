@@ -12,6 +12,8 @@ table {
     flex-wrap: wrap;
 }
 
+
+
 th {
     text-align: left;
     padding: 5px;
@@ -68,7 +70,53 @@ th:last-child {
     text-align: right;
 }
 
-.cart-page .pay-btn{
+.cart-page .pay-btn {
     display: flex;
     justify-content: flex-end;
+}
+
+small {
+    color: black;
+}
+
+.delete-btn {
+    font-family: 'Montserrat', sans-serif;
+    margin-left: 10px;
+    margin-top: 10px;
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid #ff523b;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: black;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    line-height: normal;
+    outline: none;
+    padding-left: 8px;
+    padding-right: 8px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+}
+
+.delete-btn:disabled {
+    pointer-events: none;
+}
+
+.delete-btn:hover {
+    color: #fff;
+    background-color: #ff523b;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+}
+
+.delete-btn:active {
+    box-shadow: none;
+    transform: translateY(0);
 }

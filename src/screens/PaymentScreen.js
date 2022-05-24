@@ -23,38 +23,28 @@ const PaymentScreen = {
     }
     return `
     ${CheckoutSteps.render({ step1: true, step2: true, step3: true })}
-    <div class="form-container">
-      <form id="payment-form">
-        <ul class="form-items">
-          <li>
-            <h1>Phương Thức Thanh Toán</h1>
-          </li>
-          <li>
-            <div>
-              <input type="radio"
-              name="payment-method"
-              id="momo"
-              value="momo"
-              checked />
-              <label for="momo" >MoMo</label>
-             </div> 
-          </li>
-          <li>
-          <div>
-            <input type="radio"
-            name="payment-method"
-            id="cod"
-            value="cod"
-             />
-            <label for="cod" >Thanh toán khi nhận hàng</label>
-           </div> 
-        </li>
-          <li>
-            <button type="submit" class="primary">Tiếp tục</button>
-          </li>        
-        </ul>
-      </form>
-    </div>
+    <div class="shipping__container">
+            <div class="container__child method__thumbnail">
+                <img src="images/shipping.png">
+            </div>
+            <div class="container__child payment__form">
+                <form id="payment-form">
+                    <h2>Phương Thức Thanh Toán</h2>
+                    <div class="method-container">
+                        <label for="momo" >
+                            <input type="radio" name="payment-method" id="momo" value="MoMo" checked />
+                            <span>MoMo</span>
+                        </label>
+                        <label for="cod" >
+                            <input type="radio" name="payment-method" id="cod" value="cod" />
+                            <span>Thanh toán khi nhận hàng</span>
+                        </label>
+                    </div>
+                    <a href="/#/shipping"><button type="button" class="btn cancel--shipping">Quay lại</button></a>
+                    <input class="btn btn--shipping" type="submit" value="Tiếp tục" style="float:right"/>
+                </form>
+            </div>
+        </div>
     `;
   },
 };

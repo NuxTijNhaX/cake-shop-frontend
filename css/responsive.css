@@ -1,6 +1,6 @@
 /* -------- media query for menu -------- */
 
-@media only screen and (max-width:1100px) {
+@media only screen and (max-width:1300px) {
     .row {
         text-align: center;
     }
@@ -11,6 +11,11 @@
         flex-basis: 100%;
     }
 
+    .col-2 img {
+        max-width: 60%;
+        padding: 50px 0;
+    }
+    
     .single-product .row {
         text-align: left;
     }

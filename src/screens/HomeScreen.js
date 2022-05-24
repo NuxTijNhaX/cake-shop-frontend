@@ -7,15 +7,19 @@ const HomeScreen = {
         const newProducts = await getNewReleaseProduct();
 
         return `
-        <div class="row banner">
-            <div class="col-2">
-                <h1>Chào mừng đến với<br>Tiệm bánh 101!</h1>
-                <p>Chúng tôi mang đến những chiếc bánh kem ngon nhất với giá tốt nhất<br>Hãy đặt hàng ngay hôm
-                    nay...</p>
-                <a href="/#/products/1/default" class="btn">Khám phá ngay &#8594;</a>
-            </div>
-            <div class="col-2">
-                <img src="images/banner.png">
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-2">
+                        <h1>Chào mừng đến với<br>Tiệm bánh 101!</h1>
+                        <p>Chúng tôi mang đến những chiếc bánh kem ngon nhất với giá tốt nhất<br>Hãy đặt hàng ngay hôm
+                            nay...</p>
+                        <a href="/#/products/1/default" class="btn">Khám phá ngay &#8594;</a>
+                    </div>
+                    <div class="col-2">
+                        <img src="images/banner.png">
+                    </div>
+                </div>
             </div>
         </div>
         <div class="small-container">

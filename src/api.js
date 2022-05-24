@@ -45,6 +45,21 @@ export const getNewReleaseProduct = async () => {
     }
 }
 
+export const getCategory = async () => {
+    try {
+        const response = await fetch(`${endpoint}/Category`);
+
+        if(!response || !response.ok) {
+            throw new Error(response.title);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.log("getCategory: " + error);
+        return { error: error.message };
+    }
+}
+
 export const getProducts = async (search = "", category = "", orderBy = "", page = 1) => {
     try {
         const response = await fetch(`${endpoint}/Product?search=${search}&category=${category}&orderBy=${orderBy}&page=${page}`);
@@ -79,32 +94,34 @@ export const signin = async ({ phone, password }) => {
   export const register = async ({ name, phone, password }) => {
     try {
         const response = await fetch(`${endpoint}/User/register?name=${name}&phone=${phone}&password=${password}`, {
-            method: "POST",
-            body: JSON.stringify({
-                title: "Title of post",
-                body: "Post Body"
-            })
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json; charset=utf-8'
+            }
         });
-        
+    
         if (response.status !== 200) {
-          throw new Error("Looix");
+                throw new Error("Lỗi");
         }
-        return await response.json();
-      } catch (err) {
+        return await response.text();
+    }
+    catch (err) {
         console.log(err);
         return { error: err.message };
     }
 };
 
 export const createOrder = async (order) => {
-      fetch(`${apiUrl}/api/Order`, {
+    const response = await fetch(`${endpoint}/Order`, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8'
+        },
         body: JSON.stringify(order)
-      })
-      .then(res => {
-        if (!response.ok) throw Error(response.statusText);
-        return response.json();
-      })
-      .then(data => console.log(data))
-      .catch(error => console.log(error));
+    });
+    // .then(res => res.text())
+    // .then(text => console.log(text))
+    // .catch(res => console.log(res));
+
+    return await response.json();
 };

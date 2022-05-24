@@ -20,7 +20,7 @@ const routes = {
     '/product/:id': ProductScreen,
     '/products/:id/:verb': AllProductScreen,
     '/searching/:id/:verb/:sub': SearchingScreen,
-    '/category/:id': CategoryScreen,
+    '/category/:id/:verb/:sub': CategoryScreen,
     '/cart': CartScreen,
     '/cart/:id': CartScreen,
     '/login': LoginScreen,
@@ -32,6 +32,7 @@ const routes = {
 }
 
 const router = async () => {
+    scrollToTop();
     showLoading();
     const request = parseRequestUrl();
     const parseUrl = (request.resource ? `/${request.resource}` : '/') +
@@ -53,6 +54,11 @@ const router = async () => {
     footer.innerHTML = await Footer.render();
 
     hideLoading();
+}
+
+const scrollToTop = () => {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
 }
 
 window.addEventListener('load', router);
