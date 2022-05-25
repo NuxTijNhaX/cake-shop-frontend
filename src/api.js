@@ -1,4 +1,4 @@
-import { endpoint } from "./config.js";
+import { endpoint, addressAPI } from "./config.js";
 
 export const getProduct = async (id) => {
     try {
@@ -91,9 +91,9 @@ export const signin = async ({ phone, password }) => {
     }
 };
   
-  export const register = async ({ name, phone, password }) => {
+export const register = async ({ name, phoneNumber, password }) => {
     try {
-        const response = await fetch(`${endpoint}/User/register?name=${name}&phone=${phone}&password=${password}`, {
+        const response = await fetch(`${endpoint}/User/register?name=${name}&phone=${phoneNumber}&password=${password}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json; charset=utf-8'
@@ -112,16 +112,39 @@ export const signin = async ({ phone, password }) => {
 };
 
 export const createOrder = async (order) => {
-    const response = await fetch(`${endpoint}/Order`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8'
-        },
-        body: JSON.stringify(order)
-    });
-    // .then(res => res.text())
-    // .then(text => console.log(text))
-    // .catch(res => console.log(res));
+    try {
+        const response = await fetch(`${endpoint}/Order`, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify(order)
+        });
+    
+        if (response.status !== 200) {
+                throw new Error("Lỗi");
+        }
 
-    return await response.json();
+        return await response.json();
+    }
+    catch (err) {
+        console.log(err);
+        return { error: err.message };
+    }
+};
+
+export const getProvice = async (value) => {
+    try {
+        const response = await fetch(`${addressAPI}/${value}`);
+    
+        if (response.status !== 200) {
+                throw new Error("Lỗi");
+        }
+
+        return await response.json();
+    }
+    catch (err) {
+        console.log(err);
+        return { error: err.message };
+    }
 };

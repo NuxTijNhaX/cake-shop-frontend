@@ -62,7 +62,7 @@ const PlaceOrderScreen = {
         showLoading();
         const paymentUrl = await createOrder(order);
         hideLoading();
-        console.log(paymentUrl.paymentLink);
+        // console.log(paymentUrl);
         if (paymentUrl) {
           if(paymentUrl.paymentLink) {
             window.open(paymentUrl.paymentLink, "_blank");
@@ -85,6 +85,7 @@ const PlaceOrderScreen = {
       itemsPrice,
       totalPrice,
     } = convertCartToOrder();
+    console.log(convertCartToOrder());
     return `
     <div class="small-container cart-page">
       ${CheckoutSteps.render({step1: true,step2: true,step3: true,step4: true})}

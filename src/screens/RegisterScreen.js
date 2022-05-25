@@ -50,7 +50,6 @@ const RegisterScreen = {
                 }
 
                 const data = await register({ name, phoneNumber, password });
-
                 if (data.error) {
                     showMessage(data.error);
                 } else {

@@ -24,7 +24,7 @@ const ProductCard = {
 const generateRatingStar = (star) => {
     let script = "";
     const starIcon = `<i class="fa fa-star"></i>`;
-    const starHalfIcon = `<i class="fa fa-star-half"></i>`;
+    const starHalfIcon = `<i class="fa fa-star-half-o"></i>`;
     const starZeroIcon = `<i class="fa fa-star-o"></i>`;
 
     let fullStar = Math.floor(star);

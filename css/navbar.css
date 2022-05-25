@@ -94,10 +94,6 @@ a {
     display: none;
 }
 
-.navbar form button:hover {
-    background: #563434;
-}
-
 .cart-btn:hover,
 .menu-icon:hover,
 .search-icon:hover {

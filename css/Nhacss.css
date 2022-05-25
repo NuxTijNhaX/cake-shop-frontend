@@ -33,6 +33,7 @@
     justify-content: space-between;
     width: 40rem;
     margin: 1rem auto;
+    margin-top: 50px;
   }
   .checkout-steps > div {
     border-top: 0.3rem #c0c0c0 solid;

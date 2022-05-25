@@ -32,7 +32,7 @@ const PaymentScreen = {
                     <h2>Phương Thức Thanh Toán</h2>
                     <div class="method-container">
                         <label for="momo" >
-                            <input type="radio" name="payment-method" id="momo" value="MoMo" checked />
+                            <input type="radio" name="payment-method" id="momo" value="momo" checked />
                             <span>MoMo</span>
                         </label>
                         <label for="cod" >
